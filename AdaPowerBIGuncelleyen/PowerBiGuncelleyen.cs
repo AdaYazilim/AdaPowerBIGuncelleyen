@@ -9,26 +9,26 @@ namespace SirketPowerBIGuncelleyen
         private const string TempFile = "tempFile";
 
         private readonly string _sourceFilePath;
-        private readonly string _targetFailePath;
+        private readonly string _targetFilePath;
 
-        public PowerBiFileModelUpdater(string sourceFilePath, string targetFailePath)
+        public PowerBiFileModelUpdater(string sourceFilePath, string targetFilePath)
         {
             _sourceFilePath = sourceFilePath;
-            _targetFailePath = targetFailePath;
+            _targetFilePath = targetFilePath;
         }
 
         public UpdateResult Update()
         {
             try
             {
-                FileInfo fi = new FileInfo(_targetFailePath);
+                FileInfo fi = new FileInfo(_targetFilePath);
                 if (fi.Extension.ToLowerInvariant() != ".pbix")
                 {
                     throw new Exception("Only .pbix files are accepted for source files.");
                 }
 
                 string newFileName = fi.Name.Substring(0, fi.Name.Length - 5) + ".zip";
-                File.Copy(_targetFailePath, newFileName, true);
+                File.Copy(_targetFilePath, newFileName, true);
 
                 overrideTargetArchive(_sourceFilePath, newFileName);
 
