@@ -2,14 +2,12 @@
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
-using System.IO.Compression;
 
 namespace SirketPowerBIGuncelleyen
 {
     public partial class AnaForm : Form
     {
         private const string IndirilenDosya = "guncel.zip";
-        private const string GeciciDosya = "geciciDosya";
         private bool _guncelDosyaIndirildi = false;
         private readonly string _randomKlasor;
 
@@ -45,17 +43,13 @@ namespace SirketPowerBIGuncelleyen
                 _guncelDosyaIndirildi = true;
             }
 
-            FileInfo fi = new FileInfo(dosyaAdi);
-            string yeniDosyaAdi = fi.Name.Substring(0, fi.Name.Length - 5) + ".zip";
-            File.Copy(dosyaAdi, yeniDosyaAdi, true);
-
-            zipiAktar(IndirilenDosya, yeniDosyaAdi);
-
-            string guid = Guid.NewGuid().ToString().Substring(0, 7);
-            string yeniPbixDosya = fi.FullName.Substring(0, fi.FullName.Length - 5) + "_" + guid + ".pbix";
-            File.Move(yeniDosyaAdi, yeniPbixDosya);
-
-            MessageBox.Show("Seçili dosyanın veri modeli güncellendi. Yeni dosya yolu:\n" + yeniPbixDosya);
+            PowerBiFileModelUpdater pbiFileModelUpdater = new PowerBiFileModelUpdater(IndirilenDosya, dosyaAdi);
+            PowerBiFileModelUpdater.UpdateResult updateResult = pbiFileModelUpdater.Update();
+            
+            if(updateResult.Success)
+                MessageBox.Show("Seçili dosyanın veri modeli güncellendi. Yeni dosya yolu:\n" + updateResult.UpdatedFilePath);
+            else
+                MessageBox.Show("Güncelleme sırasında hata oluştu. \n" + updateResult.Message);
         }
 
         private bool guncellenecekDosyaUygun(string dosyaPath)
@@ -73,28 +67,6 @@ namespace SirketPowerBIGuncelleyen
             }
 
             return true;
-        }
-
-        private void zipiAktar(string guncelDosya, string guncellenecekDosya)
-        {
-            using (FileStream guncel = new FileStream(guncelDosya, FileMode.Open))
-            using (FileStream guncellenecek = new FileStream(guncellenecekDosya, FileMode.Open))
-            using (ZipArchive archiveGuncel = new ZipArchive(guncel, ZipArchiveMode.Read))
-            using (ZipArchive archiveGuncellenecek = new ZipArchive(guncellenecek, ZipArchiveMode.Update))
-            {
-                dosyayiBirZiptenDigerineAktar(archiveGuncel, archiveGuncellenecek, "DataModel");
-                dosyayiBirZiptenDigerineAktar(archiveGuncel, archiveGuncellenecek, "DataMashup");
-                dosyayiBirZiptenDigerineAktar(archiveGuncel, archiveGuncellenecek, "Metadata");
-                dosyayiBirZiptenDigerineAktar(archiveGuncel, archiveGuncellenecek, "DiagramState");
-            }
-        }
-
-        private void dosyayiBirZiptenDigerineAktar(ZipArchive kaynakArsiv, ZipArchive hedefArsiv, string dosyaAdi)
-        {
-            ZipArchiveEntry entry = kaynakArsiv.GetEntry(dosyaAdi);
-            entry.ExtractToFile(GeciciDosya, true);
-            hedefArsiv.GetEntry(dosyaAdi).Delete();
-            hedefArsiv.CreateEntryFromFile(GeciciDosya, dosyaAdi, CompressionLevel.NoCompression);
         }
 
         private void guncelDosyayiIndir()
