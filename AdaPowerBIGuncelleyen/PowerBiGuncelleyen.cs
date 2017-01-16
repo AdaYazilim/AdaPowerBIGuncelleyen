@@ -2,7 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace SirketPowerBIGuncelleyen
+namespace AdaPowerBIGuncelleyen
 {
     public class PowerBiFileModelUpdater
     {

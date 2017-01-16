@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SirketPowerBIGuncelleyen
+namespace AdaPowerBIGuncelleyen
 {
     static class Program
     {

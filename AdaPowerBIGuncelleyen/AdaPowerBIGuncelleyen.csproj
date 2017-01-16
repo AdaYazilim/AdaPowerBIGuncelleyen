@@ -7,8 +7,8 @@
     <ProjectGuid>{76A0F3B3-F27E-4F62-A22F-AE209BDFF29D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SirketPowerBIGuncelleyen</RootNamespace>
-    <AssemblyName>SirketPowerBIGuncelleyen</AssemblyName>
+    <RootNamespace>AdaPowerBIGuncelleyen</RootNamespace>
+    <AssemblyName>AdaPowerBIGuncelleyen</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

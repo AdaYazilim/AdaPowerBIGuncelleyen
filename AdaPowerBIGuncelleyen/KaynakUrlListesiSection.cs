@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace SirketPowerBIGuncelleyen
+namespace AdaPowerBIGuncelleyen
 {
     public class KaynakListesiSection : ConfigurationSection
     {

@@ -1,4 +1,4 @@
-﻿namespace SirketPowerBIGuncelleyen
+﻿namespace AdaPowerBIGuncelleyen
 {
     partial class AnaForm
     {

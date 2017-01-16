@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
 
-namespace SirketPowerBIGuncelleyen
+namespace AdaPowerBIGuncelleyen
 {
     public partial class AnaForm : Form
     {
